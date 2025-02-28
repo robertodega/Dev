@@ -1,0 +1,5 @@
+.clearDiv{clear: both;}
+.pageDiv{float: left;width: 45%;border: 1px solid darkgreen;padding: 1%;margin: 1%;}
+.formDiv{width: 30%;}
+.labelDiv{background-color: antiquewhite;}
+.formContentDiv{float: left;margin: 2%;}

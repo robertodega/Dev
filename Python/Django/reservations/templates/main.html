@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Reservations App</title>
+        <link rel="stylesheet" href="{% static 'css/custom.css'%}" />
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        
+    </head>
+    <body>
+        <h1>Reservations Home Page</h1>
+        
+        <div class="pageDiv" id="userContentDiv">
+
+            <label><hr /><h2>Appointments</h2></label>
+            <form id="searchForm_appointment" name="searchForm_appointment" action="#" method="POST">
+                {% csrf_token %}
+                <div class="form-group formDiv">
+                    <div class="labelDiv"><label for="name">appointment ID</label></div>
+                    <div class="formContentDiv formInputDiv"><input type="number" name="appointmentid" id="appointmentid" class="form-control" min="1" /></div>
+                    <div class="formContentDiv formActDiv"><button type="button" class="btn btn-primary" onclick="search('appointment')">Search</button></div>
+                    <div class="clearDiv"></div>
+                </div>
+            </form>
+
+            <br /><br /><div class="card-header">
+                <h3>Add appointment</h3>
+            </div>
+            <div class="card-body">
+                <form id="addappointmentForm" action="{% url 'add_appointment' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="email">Email</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="email" name="email" id="email" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="first_name">First Name</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="first_name" id="first_name" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Last Name</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="last_name" id="last_name" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="reservation_date">Appointment Date</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="reservation_date" id="reservation_date" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="reservation_hour">Appointment Hour</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="reservation_hour" id="reservation_hour" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Address</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="address" id="address" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Phone</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="phone_number" id="phone_number" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Date of Birth</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="date_of_birth" id="date_of_birth" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="pageDiv" id="userContentDiv">
+
+            <label><hr /><h2>Anagrafica</h2></label>
+            <form id="searchForm_anagrafica" name="searchForm_anagrafica" action="#" method="POST">
+                {% csrf_token %}
+                <div class="form-group formDiv">
+                    <div class="labelDiv"><label for="userid">User ID</label></div>
+                    <div class="formContentDiv formInputDiv"><input type="number" name="anagraficaid" id="anagraficaid" class="form-control" min="1" /></div>
+                    <div class="formContentDiv formActDiv"><button type="button" class="btn btn-primary" onclick="search('anagrafica')">Search</button></div>
+                    <div class="clearDiv"></div>
+                </div>
+            </form>
+
+            <br /><br /><div class="card-header">
+                <h3>Add User</h3>
+            </div>
+            <div class="card-body">
+                <form id="addUserForm" action="{% url 'add_anagrafica' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="email">Email</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="email" name="email_anagrafica" id="email_anagrafica" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="first_name">First Name</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="first_name" id="first_name" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Last Name</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="last_name" id="last_name" class="form-control" required /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Address</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="address" id="address" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Phone</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="phone_number" id="phone_number" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group formDiv">
+                        <div class="labelDiv"><label for="last_name">Date of Birth</label></div>
+                        <div class="formContentDiv formInputDiv"><input type="text" name="date_of_birth" id="date_of_birth" class="form-control" /></div>
+                        <div class="clearDiv"></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </body>
+</html>
+
+<script src="{% static 'js/custom.js'%}"></script>
