@@ -25,12 +25,32 @@
         </head>
 
         <body>
-            <div class="headerDiv">{$appTitle}</div>
+            <div class="headerDiv"><a href='{$rootPath}'>{$appTitle}</a></div>
+            <div class="boxDiv" id="searchDiv">
+                
+                <form id="searchForm" method="post" action="./">
+                    <input type="hidden" name="action" value="search">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="searchText" placeholder="Search for a contact..." aria-label="Search for a contact...">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <a href="./?action=add" class="btn btn-primary">Add a contact</a>
+                    <a href="./?action=showAll" class="btn btn-primary">Show all contacts</a>
+                </div>
+
+                <div class="boxDiv" id="resultsDiv">
+                    {$resultTable}
+                </div>
+
+            </div>
         </body>
 
         </html>
 
         <script src="{$jsPath}custom.js"></script>
+
 
 
 - nano index.php
@@ -43,15 +63,19 @@
         require_once __DIR__ . '/libs/Smarty.class.php';
 
         include_once __DIR__ . '/config/config.php';
+        include_once __DIR__ . '/include/classConn.php';
+        include_once __DIR__ . '/include/dataTable.php';
 
         $smarty = new Smarty();
         $smarty->setTemplateDir(__DIR__ . '/templates/');
         $smarty->setCompileDir(__DIR__ . '/templates_c/');
 
-        $smarty->assign('cssPath', 'css/');
-        $smarty->assign('jsPath', 'js/');
-        $smarty->assign('imgPath', 'img/');
+        $smarty->assign('rootPath', ROOT_PATH);
+        $smarty->assign('cssPath', CSS_PATH);
+        $smarty->assign('jsPath', JS_PATH);
+        $smarty->assign('imgPath', IMG_PATH);
         $smarty->assign('appTitle', APP_TITLE);
+        $smarty->assign('resultTable', $resultTable);
 
         $smarty->display('home.tpl');
         ?>
