@@ -3,7 +3,31 @@ $action = $_GET['action'] ?? 'show';
 $formAction = $_POST['formAction'] ?? '';
 $addedResult = "";
 $deletedResult = "";
+$updateResult = "";
 $resultTable = "";
+
+if($formAction == 'update') {
+    $updateSubject = $_POST['updateSubject'] ?? '';
+    $updateUsername = $_POST['updateUsername'] ?? '';
+    $updatePassword = $_POST['updatePassword'] ?? '';
+    $updateNote = $_POST['updateNote'] ?? '';
+    $refId = $_POST['refId'] ?? '';
+    try {
+        if ($manager->updateData(RUBRICA_TBL, $refId, [
+            'subject' => htmlspecialchars($updateSubject, ENT_QUOTES, 'UTF-8'),
+            'username' => htmlspecialchars($updateUsername, ENT_QUOTES, 'UTF-8'),
+            'password' => htmlspecialchars($updatePassword, ENT_QUOTES, 'UTF-8'),
+            'note' => htmlspecialchars($updateNote, ENT_QUOTES, 'UTF-8')
+        ])) {
+            $updateResult = "Data updated successfully.";
+        } else {
+            $updateResult = "Failed to update data.";
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return;
+    }
+}
 
 if ($action == 'add') {
     $resultTable = "
@@ -56,7 +80,7 @@ elseif($action == 'delete') {
         $deletedResult = "No ID provided for deletion.";
     }
     $resultTable .= "<div class='deletedResult'>$deletedResult</div>";
-    #   return;
+    return;
 }
 
 $searchText = $_POST['searchText'] ?? '';
@@ -109,16 +133,28 @@ if (count($data) < 1) {
 }
 foreach ($data as $k => $row) {
     $dataLastRow = "";
-    $deleteBtn = "<div class='deleteBtn' refId='".$row['id']."'><a href='./?action=delete&refId=".$row['id']."' class='btn btn-primary'>Delete</a></div>";
+    $deleteBtn = "<div class='deleteBtn' refId='".$row['id']."'><a href=\"javascript:deleteRow('".$row['id']."')\" class='btn btn-primary'>Delete</a></div>";
     $lastRow = ($k == count($data) - 1);
     if ($lastRow) {
         $dataLastRow = "dataLastRow";
     }
     $resultTable .= "<div class='dataTableRow'>";
-    $resultTable .= "<div class='datatd $dataLastRow'>" . htmlspecialchars($row['subject']) . $deleteBtn ."</div>";
-    $resultTable .= "<div class='datatd $dataLastRow'>" . htmlspecialchars($row['username']) . "</div>";
-    $resultTable .= "<div class='datatd $dataLastRow'>" . htmlspecialchars($row['password']) . "</div>";
-    $resultTable .= "<div class='datatd dataLastTd $dataLastRow'>" . htmlspecialchars($row['note'] ?? '') . "</div>";
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['subject']) . "</span>" . $deleteBtn ."</div>";
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['username']) . "</span></div>";
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['password']) . "</span></div>";
+    $resultTable .= "<div class='datatd dataLastTd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['note'] ?? '') . "</span></div>";
     $resultTable .= "</div><div class='clearDiv'></div>";
 }
 $resultTable .= "</div>";
+
+$resultTable .= "
+    <form class='updateForm' id='updateRowForm' method='POST' action='./?action=\"\"'>
+        <input type='hidden' name='formAction' id='formAction' placeholder='formAction' value='update'>
+        <input type='hidden' name='updateSubject' id='updateSubject' placeholder='updateSubject' value=''>
+        <input type='hidden' name='updateUsername' id='updateUsername' placeholder='updateUsername' value=''>
+        <input type='hidden' name='updatePassword' id='updatePassword' placeholder='updatePassword' value=''>
+        <input type='hidden' name='updateNote' id='updateNote' placeholder='updateNote' value=''>
+    </form>
+";
+
+$resultTable .= "<div class='addedResult'>$updateResult</div>";

@@ -44,20 +44,8 @@ class Manager
         }
     }
 
-    public function deleteData($table, $id)
-    {
-        $query = "DELETE FROM $table WHERE id = :id";
-        try {
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            throw new Exception("Error deleting data: " . $e->getMessage());
-        }
-    }
     public function getDataByValue($table, $value)
     {
-        // Validate table name to prevent SQL injection
         if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
             throw new Exception("Invalid table name.");
         }
@@ -72,4 +60,37 @@ class Manager
             throw new Exception("Error fetching data by value: " . $e->getMessage());
         }
     }
+
+    public function deleteData($table, $id)
+    {
+        $query = "DELETE FROM $table WHERE id = :id";
+        try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting data: " . $e->getMessage());
+        }
+    }
+
+    public function updateData($table, $id, $data)
+    {
+        $set = '';
+        foreach ($data as $key => $value) {
+            $set .= "$key = :$key, ";
+        }
+        $set = rtrim($set, ', ');
+        $query = "UPDATE $table SET $set WHERE id = :id";
+        try {
+            $stmt = $this->conn->prepare($query);
+            foreach ($data as $key => &$value) {
+                $stmt->bindParam(":$key", $value);
+            }
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error updating data: " . $e->getMessage());
+        }
+    }
+
 }
