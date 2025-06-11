@@ -6,6 +6,10 @@ $deletedResult = "";
 $updateResult = "";
 $resultTable = "";
 
+$searchText = $_POST['searchText'] ?? '';
+$searchText = trim($searchText);
+$searchText = htmlspecialchars($searchText, ENT_QUOTES, 'UTF-8');
+
 if($formAction == 'update') {
     $refId = $_POST['refId'] ?? '';
     $subject = $_POST['subject'] ?? '';
@@ -84,9 +88,9 @@ elseif($action == 'delete') {
     return;
 }
 
-$searchText = $_POST['searchText'] ?? '';
-$searchText = trim($searchText);
-$searchText = htmlspecialchars($searchText, ENT_QUOTES, 'UTF-8');
+#   $searchText = $_POST['searchText'] ?? '';
+#   $searchText = trim($searchText);
+#   $searchText = htmlspecialchars($searchText, ENT_QUOTES, 'UTF-8');
 if($action == 'showAll'){$searchText = 'everything';}
 if ($searchText) {
     $data = $manager->getData(RUBRICA_TBL, $searchText);
@@ -150,8 +154,9 @@ foreach ($data as $k => $row) {
 $resultTable .= "</div>";
 
 $resultTable .= "
-    <form class='updateForm' id='updateRowForm' method='POST' action='./?action=\"\"'>
+    <form class='updateForm' id='updateRowForm' method='POST' action='./?action=show'>
         <input type='hidden' name='formAction' id='formAction' placeholder='formAction' value='update'>
+        <input type='hidden' name='searchText' id='searchText' placeholder='searchText' value='".$searchText."'>
         <input type='hidden' name='refId' id='refId' placeholder='refId' value=''>
         <input type='hidden' name='subject' id='subject' placeholder='subject' value=''>
         <input type='hidden' name='username' id='username' placeholder='username' value=''>

@@ -1,6 +1,6 @@
 <?PHP
     define("APP_TITLE", "Rubrica Smarty");
-    define("RUBRICA_TBL", "rubrica");
+    define("RUBRICA_TBL", "utils");
 
     define("DB_HOST", "localhost");
     define("DB_NAME", RUBRICA_TBL);
