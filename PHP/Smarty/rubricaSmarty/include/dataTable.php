@@ -7,17 +7,18 @@ $updateResult = "";
 $resultTable = "";
 
 if($formAction == 'update') {
-    $updateSubject = $_POST['updateSubject'] ?? '';
-    $updateUsername = $_POST['updateUsername'] ?? '';
-    $updatePassword = $_POST['updatePassword'] ?? '';
-    $updateNote = $_POST['updateNote'] ?? '';
     $refId = $_POST['refId'] ?? '';
+    $subject = $_POST['subject'] ?? '';
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $note = $_POST['note'] ?? '';
+    
     try {
         if ($manager->updateData(RUBRICA_TBL, $refId, [
-            'subject' => htmlspecialchars($updateSubject, ENT_QUOTES, 'UTF-8'),
-            'username' => htmlspecialchars($updateUsername, ENT_QUOTES, 'UTF-8'),
-            'password' => htmlspecialchars($updatePassword, ENT_QUOTES, 'UTF-8'),
-            'note' => htmlspecialchars($updateNote, ENT_QUOTES, 'UTF-8')
+            'subject' => $subject,
+            'username' => $username,
+            'password' => $password,
+            'note' => $note
         ])) {
             $updateResult = "Data updated successfully.";
         } else {
@@ -139,10 +140,11 @@ foreach ($data as $k => $row) {
         $dataLastRow = "dataLastRow";
     }
     $resultTable .= "<div class='dataTableRow'>";
-    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['subject']) . "</span>" . $deleteBtn ."</div>";
-    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['username']) . "</span></div>";
-    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['password']) . "</span></div>";
-    $resultTable .= "<div class='datatd dataLastTd $dataLastRow'><span class='editableData' title='Click to update'>" . htmlspecialchars($row['note'] ?? '') . "</span></div>";
+
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' refId='".$row['id']."' id='subject_".$row['id']."' title='Click to update'>" . htmlspecialchars($row['subject']) . "</span>" . $deleteBtn ."</div>";
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' refId='".$row['id']."' id='username_".$row['id']."' title='Click to update'>" . htmlspecialchars($row['username']) . "</span></div>";
+    $resultTable .= "<div class='datatd $dataLastRow'><span class='editableData' refId='".$row['id']."' id='password_".$row['id']."' title='Click to update'>" . htmlspecialchars($row['password']) . "</span></div>";
+    $resultTable .= "<div class='datatd dataLastTd $dataLastRow'><span class='editableData'  refId='".$row['id']."'id='note_".$row['id']."' title='Click to update'>" . htmlspecialchars($row['note'] ?? '') . "</span></div>";
     $resultTable .= "</div><div class='clearDiv'></div>";
 }
 $resultTable .= "</div>";
@@ -150,10 +152,11 @@ $resultTable .= "</div>";
 $resultTable .= "
     <form class='updateForm' id='updateRowForm' method='POST' action='./?action=\"\"'>
         <input type='hidden' name='formAction' id='formAction' placeholder='formAction' value='update'>
-        <input type='hidden' name='updateSubject' id='updateSubject' placeholder='updateSubject' value=''>
-        <input type='hidden' name='updateUsername' id='updateUsername' placeholder='updateUsername' value=''>
-        <input type='hidden' name='updatePassword' id='updatePassword' placeholder='updatePassword' value=''>
-        <input type='hidden' name='updateNote' id='updateNote' placeholder='updateNote' value=''>
+        <input type='hidden' name='refId' id='refId' placeholder='refId' value=''>
+        <input type='hidden' name='subject' id='subject' placeholder='subject' value=''>
+        <input type='hidden' name='username' id='username' placeholder='username' value=''>
+        <input type='hidden' name='password' id='password' placeholder='password' value=''>
+        <input type='hidden' name='note' id='note' placeholder='note' value=''>
     </form>
 ";
 

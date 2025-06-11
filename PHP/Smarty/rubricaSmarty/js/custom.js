@@ -5,15 +5,18 @@ $('.formField').width($(window).width() * 0.2);
 
 $('.editableData').on('click', function() {
     $(this).attr('contenteditable', 'true');
-    /* *
+    var formName = "updateRowForm";
     $(this).on('blur', function () {
-        $('#updateSubject').val($(this).attr('subject'));
-        $('#updateUsername').val($(this).attr('username'));
-        $('#updatePassword').val($(this).attr('password'));
-        $('#updateNote').val($(this).attr('note'));
-        $('#updateRowForm').submit();
+
+        var rowId = $(this).attr('refId');
+
+        $('#refId').val($('#subject_' + rowId).attr('refId'));
+        $('#subject').val($('#subject_' + rowId).text());
+        $('#username').val($('#username_' + rowId).text());
+        $('#password').val($('#password_' + rowId).text());
+        $('#note').val($('#note_' + rowId).text());
+        if (formName) {$('#' + formName).submit();}
     });
-    /* */
 });
 
 function deleteRow(id) {
