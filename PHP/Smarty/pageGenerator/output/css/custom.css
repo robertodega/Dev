@@ -1,0 +1,22 @@
+body {
+  background-color: wheat;
+}
+.clearDiv {
+  clear: both;
+}
+.headerDiv{text-align: right;padding: 1%;}
+.menuDiv {
+  border-bottom: 1px solid grey;
+}
+.menulink {
+  float: left;
+  border: 1px solid red;
+  text-align: center;
+  cursor: pointer;
+}
+.menulink {
+  color: orange;
+}
+.menulink:hover {
+  color: orangered;
+}
