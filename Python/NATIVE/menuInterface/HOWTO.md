@@ -1,0 +1,4 @@
+- sudo apt-get install python3-pip
+- sudo apt-get install python3-flask
+- python3 menu_interface.py
+- http://127.0.0.1:5000
