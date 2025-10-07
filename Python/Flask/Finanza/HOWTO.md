@@ -79,7 +79,14 @@
 
 # project files creation
 
-- mkdir templates assets assets/js assets/css assets/img
+- mkdir 
+
+        templates 
+        assets 
+        assets/js 
+        assets/css 
+        assets/img
+        
 - touch 
         
         app.py 
@@ -87,7 +94,7 @@
         templates/overview.html 
         assets/js/custom.js 
         assets/css/custom.css
-        
+
 - nano config.py
 
         import mysql.connector
