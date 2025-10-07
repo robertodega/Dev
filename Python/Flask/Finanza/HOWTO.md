@@ -67,10 +67,6 @@
         ADD UNIQUE KEY `name` (`name`,`ref_year`,`ref_month`);
 
         --
-        -- AUTO_INCREMENT per le tabelle scaricate
-        --
-
-        --
         -- AUTO_INCREMENT per la tabella `overview`
         --
         ALTER TABLE `overview`
