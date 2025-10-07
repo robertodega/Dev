@@ -191,4 +191,6 @@
 
 # project execution
 
-- python3 app.py [ from App root ]
+[ from App root ]
+
+- python3 app.py
