@@ -15,27 +15,71 @@
 
 [ from MySQL ]
 
-    CREATE DATABASE IF NOT EXISTS `finanza` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-    
-    USE `finanza`;
-    
-    DROP TABLE IF EXISTS `overview`;
+        -- phpMyAdmin SQL Dump
+        -- version 5.2.1
+        -- https://www.phpmyadmin.net/
+        --
+        -- Host: localhost
+        -- Creato il: Ott 07, 2025 alle 12:44
+        -- Versione del server: 10.4.28-MariaDB
+        -- Versione PHP: 8.2.4
 
-    CREATE TABLE `overview` (
-      `id` int(11) NOT NULL,
-      `name` varchar(255) NOT NULL,
-      `ref_year` varchar(255) NOT NULL,
-      `ref_month` varchar(255) NOT NULL,
-      `amount` float NOT NULL,
-      `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-      `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+        START TRANSACTION;
+        SET time_zone = "+00:00";
 
-    ALTER TABLE `overview`
-     ADD PRIMARY KEY (`id`);
 
-    ALTER TABLE `overview`
-     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+        /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+        /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+        /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+        /*!40101 SET NAMES utf8mb4 */;
+
+        --
+        -- Database: `finanza_Python`
+        --
+
+        -- --------------------------------------------------------
+
+        --
+        -- Struttura della tabella `overview`
+        --
+
+        DROP TABLE IF EXISTS `overview`;
+        CREATE TABLE `overview` (
+        `id` int(11) NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `ref_year` varchar(255) NOT NULL,
+        `ref_month` varchar(255) NOT NULL,
+        `amount` float NOT NULL,
+        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+        `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+        --
+        -- Indici per le tabelle scaricate
+        --
+
+        --
+        -- Indici per le tabelle `overview`
+        --
+        ALTER TABLE `overview`
+        ADD PRIMARY KEY (`id`),
+        ADD UNIQUE KEY `name` (`name`,`ref_year`,`ref_month`);
+
+        --
+        -- AUTO_INCREMENT per le tabelle scaricate
+        --
+
+        --
+        -- AUTO_INCREMENT per la tabella `overview`
+        --
+        ALTER TABLE `overview`
+        MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+        COMMIT;
+
+        /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+        /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+        /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 # project files creation
 
