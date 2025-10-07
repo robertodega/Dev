@@ -1,18 +1,20 @@
 from flask import Flask, render_template, request
 from config import get_db_connection
+import const
 
 app = Flask(__name__)
 
-
 @app.route("/")
-def home():
+def overview():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM overview")
     outcomes = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render_template("overview.html", outcomes=outcomes)
+    return render_template("overview.html",
+                           pageValue="overview",
+                           outcomes=outcomes,)
 
 
 @app.route("/add_outcome", methods=["POST"])

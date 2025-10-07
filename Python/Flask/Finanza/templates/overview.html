@@ -6,16 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="assets/js/jquery.js"></script>
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <script src="assets/js/bootstrap.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 
 <body>
-    <h1>Finanza</h1>
+    <section id="header">
+        <h1>Finanza</h1><h2>{{ pageValue }}</h2>
+    </section>
+    
     <form action="/add_outcome" method="post">
         <input type="text" name="name" placeholder="Outcome name" required>
         <input type="text" name="ref_year" placeholder="Outcome ref_year" required>
