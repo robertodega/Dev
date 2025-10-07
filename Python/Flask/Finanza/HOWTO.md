@@ -132,11 +132,11 @@
             outcomes = cursor.fetchall()
             cursor.close()
             conn.close()
-            return render_template("overview.html", 
-                                outcomes=outcomes,
-                                CSS_PATH=const.cssPath,
-                                JS_PATH=const.jsPath,
-                                IMG_PATH=const.imgPath)
+            return render_template("overview.html",
+                                cssPath=const.cssPath,
+                                jsPath=const.jsPath,
+                                imgPath=const.imgPath,
+                                outcomes=outcomes,)
 
 
         @app.route("/add_outcome", methods=["POST"])
@@ -172,12 +172,12 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <script src="{{ JS_PATH + 'jquery.js' }}"></script>
-            <link rel="stylesheet" href="{{ CSS_PATH + 'bootstrap.css' }}">
-            <script src="{{ JS_PATH + 'bootstrap.js' }}"></script>
+            <script src="{{ jsPath + 'jquery.js' }}"></script>
+            <link rel="stylesheet" href="{{ cssPath + 'bootstrap.css' }}">
+            <script src="{{ jsPath + 'bootstrap.js' }}"></script>
 
-            <link rel="icon" type="image/x-icon" href="{{ IMG_PATH + 'favicon.ico' }}" />
-            <link rel="stylesheet" href="{{ CSS_PATH + 'custom.css' }}">
+            <link rel="icon" type="image/x-icon" href="{{ imgPath + 'favicon.ico' }}" />
+            <link rel="stylesheet" href="{{ cssPath + 'custom.css' }}">
         </head>
 
         <body>
