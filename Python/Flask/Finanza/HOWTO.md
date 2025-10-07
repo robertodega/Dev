@@ -82,10 +82,10 @@
 - mkdir 
 
         templates 
-        assets 
-        assets/js 
-        assets/css 
-        assets/img
+        static 
+        static/js 
+        static/css 
+        static/img
 
 - touch 
         
@@ -93,14 +93,8 @@
         config.py 
         const.py
         templates/overview.html 
-        assets/js/custom.js 
-        assets/css/custom.css
-
-- nano const.py
-
-        cssPath = 'assets/css/'
-        jsPath = 'assets/js/'
-        imgPath = 'assets/img/'
+        static/js/custom.js 
+        static/css/custom.css
 
 - nano config.py
 
@@ -133,9 +127,7 @@
             cursor.close()
             conn.close()
             return render_template("overview.html",
-                                cssPath=const.cssPath,
-                                jsPath=const.jsPath,
-                                imgPath=const.imgPath,
+                                pageValue="overview",
                                 outcomes=outcomes,)
 
 
@@ -172,16 +164,19 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <script src="{{ jsPath + 'jquery.js' }}"></script>
-            <link rel="stylesheet" href="{{ cssPath + 'bootstrap.css' }}">
-            <script src="{{ jsPath + 'bootstrap.js' }}"></script>
+            <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+            <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 
-            <link rel="icon" type="image/x-icon" href="{{ imgPath + 'favicon.ico' }}" />
-            <link rel="stylesheet" href="{{ cssPath + 'custom.css' }}">
+            <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
         </head>
 
         <body>
-            <h1>Finanza</h1>
+            <section id="header">
+                <h1>Finanza</h1><h2>{{ pageValue }}</h2>
+            </section>
+            
             <form action="/add_outcome" method="post">
                 <input type="text" name="name" placeholder="Outcome name" required>
                 <input type="text" name="ref_year" placeholder="Outcome ref_year" required>
