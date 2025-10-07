@@ -91,9 +91,16 @@
         
         app.py 
         config.py 
+        const.py
         templates/overview.html 
         assets/js/custom.js 
         assets/css/custom.css
+
+- nano const.py
+
+        cssPath = 'assets/css/'
+        jsPath = 'assets/js/'
+        imgPath = 'assets/img/'
 
 - nano config.py
 
@@ -113,19 +120,23 @@
 
         from flask import Flask, render_template, request
         from config import get_db_connection
+        import const
 
         app = Flask(__name__)
 
-
         @app.route("/")
-        def home():
+        def overview():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM overview")
             outcomes = cursor.fetchall()
             cursor.close()
             conn.close()
-            return render_template("overview.html", outcomes=outcomes)
+            return render_template("overview.html", 
+                                outcomes=outcomes,
+                                CSS_PATH=const.cssPath,
+                                JS_PATH=const.jsPath,
+                                IMG_PATH=const.imgPath)
 
 
         @app.route("/add_outcome", methods=["POST"])
@@ -145,12 +156,11 @@
             conn.commit()
             cursor.close()
             conn.close()
-            return "outvìcome has been added successfully"
+            return "Outcome has been added successfully<hr /><a href='/'>Go Back</a>"
 
 
         if __name__ == "__main__":
             app.run(debug=True)
-
 
 - nano templates/overview.html
 
@@ -162,12 +172,12 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <script src="assets/js/jquery.js"></script>
-            <link rel="stylesheet" href="assets/css/bootstrap.css">
-            <script src="assets/js/bootstrap.js"></script>
+            <script src="{{ JS_PATH + 'jquery.js' }}"></script>
+            <link rel="stylesheet" href="{{ CSS_PATH + 'bootstrap.css' }}">
+            <script src="{{ JS_PATH + 'bootstrap.js' }}"></script>
 
-            <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-            <link rel="stylesheet" href="assets/css/custom.css">
+            <link rel="icon" type="image/x-icon" href="{{ IMG_PATH + 'favicon.ico' }}" />
+            <link rel="stylesheet" href="{{ CSS_PATH + 'custom.css' }}">
         </head>
 
         <body>
@@ -193,4 +203,6 @@
 
 [ from App root ]
 
+- python3 -m venv venv
+- source venv/bin/activate
 - python3 app.py
