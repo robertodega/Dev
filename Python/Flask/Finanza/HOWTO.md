@@ -86,7 +86,7 @@
         assets/js 
         assets/css 
         assets/img
-        
+
 - touch 
         
         app.py 
@@ -104,7 +104,7 @@
                 host='localhost',
                 user='root',
                 password='',
-                database='finanza'
+                database='finanza_Python'
             )
 
 # finanza app creation
